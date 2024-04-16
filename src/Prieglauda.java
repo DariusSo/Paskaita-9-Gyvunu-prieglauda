@@ -27,7 +27,7 @@ public class Prieglauda {
             case 2:
                 pasalinti();
                 while (true){
-                    System.out.println("Spauskite 1 jeigu norite prideti dar, 2 jeigu norite baigti.");
+                    System.out.println("Spauskite 1 jeigu norite pasalinti dar, 2 jeigu norite baigti.");
                     int c = scanner.nextInt();
                     scanner.nextLine();
                     if (c == 1){
@@ -64,24 +64,24 @@ public class Prieglauda {
             case 1:
                 System.out.println("Kokia veisle?");
                 String veisle = scanner.nextLine();
-                Gyvunas suo = new Suo(vardas, amzius, svoris, veisle);
+                Suo suo = new Suo(vardas, amzius, svoris, veisle);
                 sarasas.add(suo);
-                System.out.println("Pridetas gyvunas yra: " + gyvunoInfo(suo));
+                System.out.println("Pridetas gyvunas yra: " + suoInfo(suo));
                 break;
             case 2:
                 System.out.println("Kokia kailio spalva?");
                 String kailioSpalva = scanner.nextLine();
-                Gyvunas kate = new Kate(vardas, amzius, svoris,kailioSpalva);
+                Kate kate = new Kate(vardas, amzius, svoris,kailioSpalva);
                 sarasas.add(kate);
-                System.out.println("Pridetas gyvunas yra: " + gyvunoInfo(kate));
+                System.out.println("Pridetas gyvunas yra: " + kateInfo(kate));
                 break;
             case 3:
                 System.out.println("Koks sparnu ilgis?");
                 String sparnuIlgis = scanner.nextLine();
                 scanner.nextLine();
-                Gyvunas paukstis = new Paukstis(vardas, amzius, svoris, sparnuIlgis);
+                Paukstis paukstis = new Paukstis(vardas, amzius, svoris, sparnuIlgis);
                 sarasas.add(paukstis);
-                System.out.println("Pridetas gyvunas yra: " + gyvunoInfo(paukstis));
+                System.out.println("Pridetas gyvunas yra: " + paukscioInfo(paukstis));
                 break;
             default:
                 System.out.println("Kazka blogai ivedete.");
@@ -92,26 +92,57 @@ public class Prieglauda {
         String vardas = scanner.nextLine();
         for (Gyvunas g : sarasas){
             if (g.getVardas().equals(vardas)){
+
                 sarasas.remove(g);
                 System.out.println("Pasalintas gyvunas: " + gyvunoInfo(g));
+                break;
             }
         }
     }
     public void gyvunoPaieska(String gKintamasis){
         for (Gyvunas g : sarasas){
             if (g.getVardas().equals(gKintamasis) || g.getAmzius().equals(gKintamasis) || g.getSvoris().equals(gKintamasis) || String.valueOf(getClass()).equals(gKintamasis)){
-                System.out.println(g.getVardas() + "|" + g.getAmzius() + "|" + g.getSvoris() + "|" + g.getClass());
+                if (g.getClass().getSimpleName().equals("Suo")){
+                    System.out.println(suoInfo((Suo) g));
+                } else if (g.getClass().getSimpleName().equals("Kate")) {
+                    System.out.println(kateInfo((Kate) g));
+                } else if (g.getClass().getSimpleName().equals("Paukstis")) {
+                    System.out.println(paukscioInfo((Paukstis) g));
+                }
 
             }
         }
 
     }
-    public String gyvunoInfo(Gyvunas a){
-                return a.getVardas() + "|" + a.getAmzius() + "|" + a.getSvoris() + "|" + a.getClass();
+    public String gyvunoInfo(Gyvunas g){
+        if (g.getClass().getSimpleName().equals("Suo")){
+            return suoInfo((Suo) g);
+        } else if (g.getClass().getSimpleName().equals("Kate")) {
+            return kateInfo((Kate) g);
+        } else if (g.getClass().getSimpleName().equals("Paukstis")) {
+            return paukscioInfo((Paukstis) g);
+        }
+        return "";
+    }
+    public String paukscioInfo(Paukstis a){
+        return "Vardas: " + a.getVardas() + ", amzius: " + a.getAmzius() + ", svoris: " + a.getSvoris() + ", klase: " + a.getClass().getSimpleName() + ", sparnu ilgis (mm):" + a.getSparnuIlgisMM();
+    }
+    public String suoInfo(Suo a){
+        return "Vardas: " + a.getVardas() + ", amzius: " + a.getAmzius() + ", svoris: " + a.getSvoris() + ", klase: " + a.getClass().getSimpleName() + ", veisle: " + a.getVeisle();
+    }
+    public String kateInfo(Kate a){
+        return "Vardas: " + a.getVardas() + ", amzius: " + a.getAmzius() + ", svoris: " + a.getSvoris() + ", klase: " + a.getClass().getSimpleName() + ", kailio spalva: " + a.getKailioSpalva();
     }
     public void rodykSarasa(){
         for (Gyvunas g : sarasas){
-            System.out.println(g.getVardas() + "|" + g.getAmzius() + "|" + g.getSvoris() + "|" + String.valueOf(g.getClass()));
+            if (g.getClass().getSimpleName().equals("Suo")){
+                System.out.println(suoInfo((Suo) g));
+            } else if (g.getClass().getSimpleName().equals("Kate")) {
+                System.out.println(kateInfo((Kate) g));
+            } else if (g.getClass().getSimpleName().equals("Paukstis")) {
+                System.out.println(paukscioInfo((Paukstis) g));
+            }
         }
     }
+
 }

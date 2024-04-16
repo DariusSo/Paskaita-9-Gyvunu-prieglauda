@@ -13,4 +13,6 @@ public class Paukstis extends Gyvunas {
     public void setSparnuIlgisMM(String sparnuIlgisMM) {
         this.sparnuIlgisMM = sparnuIlgisMM;
     }
+
+
 }
